@@ -27,7 +27,7 @@ public class ChessAccept implements CommandExecutor {
             index = ChessRequest.requestedPlayers.indexOf(sender.getName());
 
             //Sending sender and receiver confirmation messages
-            Bukkit.getPlayer(ChessRequest.requestSenders.get(index)).sendMessage(Utils.chat("&6Your chest request has been accepted by&a " + sender + " &6!"));
+            Bukkit.getPlayer(ChessRequest.requestSenders.get(index)).sendMessage(Utils.chat("&6Your chess request has been accepted by&a " + sender.getName() + "&6!"));
             sender.sendMessage(Utils.chat("&6You have accepted the chess request!"));
 
             //Cleaning up old entries on the list
@@ -36,7 +36,7 @@ public class ChessAccept implements CommandExecutor {
             return true;
         } else {
             //Player does not have a request, and it has failed.
-            sender.sendMessage("&cYou do not have any incoming requests.");
+            sender.sendMessage(Utils.chat("&cYou do not have any incoming requests."));
             return false;
         }
     }
