@@ -1,0 +1,11 @@
+name: InstaChess
+description: Have fun playing chess with your friends!
+version: 0.0.0
+author: CodeConduit
+main: me.CodeConduit.InstaChess.Main
+
+commands:
+  chessRequest:
+    description: Sends a request to player to begin a chess match.
+  chessAccept:
+    description: Accepts another players chess request.
