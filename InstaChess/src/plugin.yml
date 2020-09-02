@@ -1,6 +1,6 @@
 name: InstaChess
 description: Have fun playing chess with your friends!
-version: 0.1.1
+version: 0.2.0
 author: CodeConduit
 main: me.CodeConduit.InstaChess.Main
 
