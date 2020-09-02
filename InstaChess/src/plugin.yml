@@ -9,3 +9,5 @@ commands:
     description: Sends a request to player to begin a chess match.
   chessAccept:
     description: Accepts another players chess request.
+  returnItem:
+    description: Returns your item, after you get rid of the

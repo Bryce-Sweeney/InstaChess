@@ -16,6 +16,7 @@ public class ChessRequest<RequestedPlayers> implements CommandExecutor {
     private Main plugin;
     static List<String> requestedPlayers=new ArrayList<String>();
     static List<String> requestSenders=new ArrayList<String>();
+    static List<String> activePlayers=new ArrayList<String>();
 
     //Standard constructor for a command
     public ChessRequest(Main plugin) {
@@ -26,21 +27,15 @@ public class ChessRequest<RequestedPlayers> implements CommandExecutor {
     //Actual command
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-        //Variables
-        boolean secondActive;
         //Redefining sender for ease of use
         Player player = (Player) sender;
-        if (args.length == 0 || args.length > 2) {
+        if (args.length != 1) {
             //The player has imputed an incorrect number of arguments
-            player.sendMessage(Utils.chat("&c/requestChess {player} [timeout]"));
+            player.sendMessage(Utils.chat("&c/requestChess {player}"));
             return false;
         } else {
             for (Player sent : Bukkit.getOnlinePlayers()) {
                 if (sent.getName().toLowerCase().equals(args[0].toLowerCase())) {
-                    //Is the second argument active? If so, enable the second argument section.
-                    if (args.length == 2)
-                        secondActive = true;
-
                     //Does the receiver already have a request, is so, don't send
                     if (requestedPlayers.contains(sender.getName()) || requestSenders.contains(sender.getName())) {
                         sender.sendMessage(Utils.chat("&cThat player already has a pending request."));
@@ -53,9 +48,19 @@ public class ChessRequest<RequestedPlayers> implements CommandExecutor {
                         return false;
                     }
 
+                    //Does the sender/receiver have an active game already?
+                    if (activePlayers.contains(player.getName())) {
+                        player.sendMessage(Utils.chat("&cYou already have an active game!"));
+                        return false;
+                    } else if (activePlayers.contains(sent.getName())) {
+                        player.sendMessage(Utils.chat("&cThat person already has an active game!"));
+                        return false;
+                    }
+
                     //Execute request sending
                     requestedPlayers.add(sent.getName());
                     requestSenders.add(player.getName());
+                    player.sendMessage(Utils.chat("&6Chess request successfully sent!"));
                     sent.sendMessage(Utils.chat("&aCodeConduit &6has sent you a chess request!"));
                     sent.sendMessage(Utils.chat("&6Do &a/chessAccept &6to accept!"));
                     return true;
